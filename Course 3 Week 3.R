@@ -162,6 +162,108 @@ cran %>%
 
 
 
+library(swirl)
+swirl()
+library(tidyr)
+
+students
+
+?gather
+
+gather(students, sex, count, -grade)
+
+students2
+
+res <- gather(students2, sex_class, count, -grade)
+res
+
+?separate
+
+separate(res, sex_class, c("sex", "class"))
+
+students2 %>%
+  gather(sex_class ,count ,-grade ) %>%
+  separate(sex_class , c("sex", "class")) %>%
+  print
+
+students3
+
+students3 %>%
+  gather( class, grade , class1:class5 ,na.rm = TRUE) %>%
+  print
+submit()
+
+?spread
+
+stocks <- data.frame(
+  time = as.Date('2009-01-01') + 0:9,
+  X = rnorm(10, 0, 1),
+  Y = rnorm(10, 0, 2),
+  Z = rnorm(10, 0, 4)
+)
+stocksm <- stocks %>% gather(stock, price, -time)
+
+stocksm
+stocksm %>% spread(stock, price)
+stocksm %>% spread(time, price)
+
+students3 %>%
+  gather(class, grade, class1:class5, na.rm = TRUE) %>%
+  spread(test,grade) %>%
+  print
+submit()
+
+library(readr)
+parse_number("class5")
+
+students3 %>%
+  gather(class, grade, class1:class5, na.rm = TRUE) %>%
+  spread(test, grade) %>%
+  ### Call to mutate() goes here %>%
+  mutate(class = parse_number(class)) %>%
+  print
+
+students
+
+student_info <- students4 %>%
+  select( id, name, sex) %>%
+  print
+submit()
+
+student_info <- students4 %>%
+  select(id, name, sex) %>%
+  ### Your code here %>%
+  unique() %>%
+  print
+
+gradebook <- students4 %>%
+  ### Your code here %>%
+  select(id, class, midterm, final)%>%
+  print
+
+passed
+failed
+
+passed <- passed %>% mutate(status = "passed")
+failed <- failed %>% mutate(status = "failed")
+
+?bind_rows
+bind_rows(passed, failed)
+
+sat
+
+sat %>%
+  select(-contains("total")) %>%
+  gather(part_sex, count, -score_range) %>%
+  separate(part_sex, c("part", "sex")) %>%
+  group_by(part, sex) %>%
+  mutate(total = sum(count),
+         prop = count / total
+  ) %>% print
+
+
+
+
 
 
 
